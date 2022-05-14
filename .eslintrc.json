@@ -1,0 +1,196 @@
+{
+  "env": {
+    "browser": true,
+    "es2021": true,
+    "jest": true
+  },
+  "extends": [
+    "plugin:react/recommended",
+    "airbnb",
+    // Error sample: ‘test’ is not defined
+    "plugin:@typescript-eslint/recommended",
+    //Preetier to override eslint formatting
+    "prettier/prettier",
+    "plugin:prettier/recommended"
+  ],
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": "tsconfig.json"
+  },
+  "plugins": [
+    "react",
+    "@typescript-eslint",
+    "react-hooks",
+    "import"
+  ],
+  "rules": {
+    "react/jsx-uses-react": "off",
+    "react/react-in-jsx-scope": "off",
+    "no-param-reassign": ["error", { "props": true, "ignorePropertyModificationsFor": ["state"] }],
+    // Error sample: ‘React’ was used before it was defined
+    "no-use-before-define": "off",
+    "@typescript-eslint/require-await": "error",
+    "@typescript-eslint/await-thenable": "error",
+    "@typescript-eslint/no-floating-promises": "error",
+    "@typescript-eslint/no-use-before-define": [
+      "error"
+    ],
+    // Error sample: JSX not allowed in files with extension ‘.tsx’
+    "react/jsx-filename-extension": [
+      "warn",
+      {
+        "extensions": [
+          ".tsx"
+        ]
+      }
+    ],
+    "import/no-unresolved": "warn",
+    // Error sample: Unable to resolve path to module ‘./App’
+    "import/extensions": [
+      "warn",
+      "ignorePackages",
+      {
+        "ts": "never",
+        "tsx": "never"
+      }
+    ],
+    // Error sample: ‘Enum’ is already declared in the upper scope
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": [
+      "error"
+    ],
+    // Force all functions have explicit return type
+    // "@typescript-eslint/explicit-function-return-type": [
+    //     "error",
+    //     {
+    //       "allowExpressions": true
+    //     }
+    // ],
+    // React Hooks rules
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    // Prefer use of default export
+    "import/prefer-default-export": "off",
+    // Prop Types rules
+    "react/prop-types": "off",
+    "react/function-component-definition": [
+      2,
+      {
+        "namedComponents": "arrow-function",
+        "unnamedComponents": "arrow-function"
+      }
+    ],
+    "jsx-a11y/label-has-associated-control": [
+      "error",
+      {
+        "required": {
+          "some": [
+            "nesting",
+            "id"
+          ]
+        }
+      }
+    ],
+    "jsx-a11y/label-has-for": [
+      "error",
+      {
+        "required": {
+          "some": [
+            "nesting",
+            "id"
+          ]
+        }
+      }
+    ],
+    "import/no-absolute-path": "error",
+    "import/no-cycle": "warn",
+    "import/no-useless-path-segments": [
+      "error",
+      {
+        "noUselessIndex": true
+      }
+    ],
+    "import/newline-after-import": "warn",
+    "import/order": [
+      "warn",
+      {
+        "pathGroups": [
+          {
+            "pattern": "@components/**",
+            "group": "external",
+            "position": "after"
+          },
+          {
+            "pattern": "@redux/**",
+            "group": "external",
+            "position": "after"
+          }
+        ],
+        "pathGroupsExcludedImportTypes": ["builtin"],
+        "groups": [
+          "builtin",
+          "external",
+          "internal",
+          "parent",
+          "sibling",
+          "index"
+        ],
+        "newlines-between": "always"
+      }
+    ]
+  },
+  // Error sample: Unable to resolve path to module ‘./App’
+  "settings": {
+    "import/resolver":{
+      "node": {
+        "moduleDirectory": ["node_modules", "src/"],
+        "extensions": [".js", ".jsx", ".ts", ".tsx"]
+      }
+    }
+  }
+}
+
+
+// {
+//   "env": {
+//     "browser": true,
+//     "es2021": true
+//   },
+//   "extends": [
+//     "plugin:react/recommended",
+//     "airbnb",
+//     "plugin:jsx-a11y/recommended",
+//     "eslint:recommended",
+//     "prettier/prettier",
+//     "plugin:prettier/recommended"
+//   ],
+//   "parserOptions": {
+//     "ecmaFeatures": {
+//       "jsx": true
+//     },
+//     "ecmaVersion": "latest",
+//     "sourceType": "module"
+//   },
+//   "plugins": [
+//     "react"
+//   ],
+//   "rules": {
+//     "react/prop-types": "off",
+//     "import/no-unresolved": "warn",
+//     "import/prefer-default-export": "off",
+//     "import/no-absolute-path": "error",
+//     "react/jsx-filename-extension": [1, { "extensions": [".js"] }],
+//     "react/jsx-uses-react": "off",
+//     "react/react-in-jsx-scope": "off"
+//   },
+//   "settings": {
+//     "react": {
+//       "version": "detect"
+//     }
+//   }
+// }
