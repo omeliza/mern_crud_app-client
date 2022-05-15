@@ -24,7 +24,7 @@ const CustomCard = styled(Card)(() => ({
 }));
 
 const CustomCardActions = styled(CardActions)(() => ({
-  padding: '0 16px 8px 16px',
+  padding: '0 5px 10px 5px',
   display: 'flex',
   justifyContent: 'space-between',
 }));
@@ -38,7 +38,7 @@ const StyledCardHeader = styled('div')({
 const EditWrapper = styled('div')({
   position: 'absolute',
   top: '20px',
-  right: '20px',
+  right: '5px',
   color: 'white',
 });
 
