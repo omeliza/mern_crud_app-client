@@ -22,7 +22,7 @@ const styles = {
   position: 'absolute',
   zIndex: 1,
   maxWidth: '300px',
-  borderRadius: '5%',
+  // borderRadius: '15%',
   backgroundColor: 'white',
 };
 
@@ -87,10 +87,9 @@ const ModalComponent: FC<ModalProps> = ({
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
-        border: '2px solid #000',
         boxShadow: 24,
         p: 4,
+        borderRadius: '15px',
       }}
     >
       <Box
@@ -99,9 +98,10 @@ const ModalComponent: FC<ModalProps> = ({
         noValidate
         className={`${styles}`}
         onSubmit={handleSubmit(onSubmit)}
-        sx={{ padding: theme.spacing(2) }}
+        justifyContent="center"
+        sx={{ padding: theme.spacing(2), paddingLeft: 0 }}
       >
-        <Typography variant="h6">
+        <Typography variant="h6" textAlign="center">
           {currentId ? 'Editing the User' : 'Creating a User'}
         </Typography>
         <TextField

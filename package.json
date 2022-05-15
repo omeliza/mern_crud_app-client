@@ -64,6 +64,6 @@
     "i": "0.3.7",
     "npm": "8.10.0",
     "prettier": "2.6.2"
-  },
-  "proxy": "https://users-crud-application.herokuapp.com/users"
+  }
 }
+
