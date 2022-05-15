@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-props-no-spreading */
 import { FC, useEffect, useState } from 'react';
 import {
   Button,
@@ -8,6 +9,7 @@ import {
   Typography,
   Box,
 } from '@mui/material';
+import { useForm } from 'react-hook-form';
 
 import { useAppDispatch, useAppSelector } from 'redux/hooks';
 import { createUser, updateUser } from 'redux/slices/user/user.slice';
@@ -53,6 +55,12 @@ const ModalComponent: FC<ModalProps> = ({
   );
   const dispatch = useAppDispatch();
   const theme = createTheme();
+  const {
+    register,
+    formState: { errors, isValid },
+    handleSubmit,
+  } = useForm({ mode: 'onBlur' });
+
   useEffect(() => {
     if (user) setUserData(user);
   }, [user]);
@@ -61,9 +69,7 @@ const ModalComponent: FC<ModalProps> = ({
     setCurrentId('');
     setUserData({ _id: '', first_name: '', last_name: '', email: '' });
   };
-  const handleSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-
+  const onSubmit = async () => {
     if (!currentId.length) {
       await dispatch(createUser(userData));
       clear();
@@ -92,16 +98,29 @@ const ModalComponent: FC<ModalProps> = ({
         autoComplete="off"
         noValidate
         className={`${styles}`}
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         sx={{ padding: theme.spacing(2) }}
       >
         <Typography variant="h6">
           {currentId ? 'Editing the User' : 'Creating a User'}
         </Typography>
         <TextField
+          {...register('name', {
+            required: 'Name is required',
+            pattern: {
+              value: /^[A-Za-z]+$/i,
+              message: 'Alphabetical characters only',
+            },
+            maxLength: {
+              value: 15,
+              message: 'Should be less than 15 symbols',
+            },
+          })}
           name="name"
           variant="outlined"
           label="Name"
+          helperText={errors?.name?.message}
+          error={Boolean(errors?.name)}
           fullWidth
           value={userData.first_name}
           onChange={(e) =>
@@ -110,9 +129,22 @@ const ModalComponent: FC<ModalProps> = ({
           sx={{ margin: theme.spacing(1) }}
         />
         <TextField
+          {...register('surname', {
+            required: 'Name is required',
+            pattern: {
+              value: /^[A-Za-z]+$/i,
+              message: 'Alphabetical characters only',
+            },
+            maxLength: {
+              value: 15,
+              message: 'Should be less than 15 symbols',
+            },
+          })}
           name="surname"
           variant="outlined"
           label="Surname"
+          helperText={errors?.surname?.message}
+          error={Boolean(errors?.surname)}
           fullWidth
           value={userData.last_name}
           onChange={(e) =>
@@ -121,9 +153,19 @@ const ModalComponent: FC<ModalProps> = ({
           sx={{ margin: theme.spacing(1) }}
         />
         <TextField
+          {...register('email', {
+            required: 'Email is required',
+            pattern: {
+              value:
+                /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+              message: 'Email is not correct!',
+            },
+          })}
           name="email"
           variant="outlined"
           label="Email"
+          error={Boolean(errors?.email)}
+          helperText={errors?.email?.message}
           fullWidth
           value={userData.email}
           onChange={(e) => setUserData({ ...userData, email: e.target.value })}
@@ -135,6 +177,7 @@ const ModalComponent: FC<ModalProps> = ({
           size="large"
           type="submit"
           fullWidth
+          disabled={!isValid}
         >
           Submit
         </CustomButton>
