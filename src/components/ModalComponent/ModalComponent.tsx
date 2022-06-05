@@ -187,6 +187,7 @@ const ModalComponent: FC<ModalProps> = ({
           size="small"
           onClick={clear}
           fullWidth
+          data-testid="clear"
         >
           Clear
         </CustomButton>
