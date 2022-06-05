@@ -22,7 +22,6 @@ const styles = {
   position: 'absolute',
   zIndex: 1,
   maxWidth: '300px',
-  // borderRadius: '15%',
   backgroundColor: 'white',
 };
 
@@ -130,7 +129,7 @@ const ModalComponent: FC<ModalProps> = ({
         />
         <TextField
           {...register('surname', {
-            required: 'Name is required',
+            required: 'Surname is required',
             pattern: {
               value: /^[A-Za-z]+$/i,
               message: 'Alphabetical characters only',
@@ -178,6 +177,7 @@ const ModalComponent: FC<ModalProps> = ({
           type="submit"
           fullWidth
           disabled={!isValid}
+          data-testid="submit"
         >
           Submit
         </CustomButton>
