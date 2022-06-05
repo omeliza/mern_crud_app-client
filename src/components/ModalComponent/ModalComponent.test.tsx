@@ -12,11 +12,11 @@ describe('ModalComnent', () => {
       <Provider store={store}>
         <ModalComponent
           currentId=""
-          setCurrentId={(): void => {
-            throw new Error('Function not implemented.');
+          setCurrentId={() => {
+            return '';
           }}
-          handleClose={(): void => {
-            throw new Error('Function not implemented.');
+          handleClose={() => {
+            return false;
           }}
         />
         ,
@@ -39,11 +39,11 @@ describe('ModalComnent', () => {
       <Provider store={store}>
         <ModalComponent
           currentId=""
-          setCurrentId={(): void => {
-            throw new Error('Function not implemented.');
+          setCurrentId={() => {
+            return '';
           }}
-          handleClose={(): void => {
-            throw new Error('Function not implemented.');
+          handleClose={() => {
+            return false;
           }}
         />
         ,
@@ -69,6 +69,57 @@ describe('ModalComnent', () => {
     await waitFor(() => {
       getByText('Should be less than 15 symbols');
       getByText('Email is not correct!');
+      expect(getByTestId(/submit/i)).toBeDisabled();
+    });
+  });
+
+  it('should check if submit enables on correct inputs && check for clear button work', async () => {
+    const { getByLabelText, getAllByRole, getByTestId } = render(
+      <Provider store={store}>
+        <ModalComponent
+          currentId=""
+          setCurrentId={() => {
+            return '';
+          }}
+          handleClose={() => {
+            return false;
+          }}
+        />
+        ,
+      </Provider>,
+    );
+    const nameTextField = getByLabelText('Name');
+    const surnameTextField = getByLabelText('Surname');
+    const emailTextField = getByLabelText('Email');
+
+    const name = 'Name';
+    const surname = 'Surname';
+    const email = 'email@email.com';
+
+    userEvent.type(nameTextField, name);
+    userEvent.type(surnameTextField, surname);
+    userEvent.type(emailTextField, email);
+    const inputs = getAllByRole('textbox');
+    inputs.forEach((i) => {
+      i.focus();
+      i.blur();
+    });
+
+    await waitFor(() => {
+      expect(nameTextField).toHaveDisplayValue(name);
+      expect(surnameTextField).toHaveDisplayValue(surname);
+      expect(emailTextField).toHaveDisplayValue(email);
+      expect(getByTestId(/submit/i)).not.toBeDisabled();
+    });
+
+    userEvent.click(getByTestId(/clear/i));
+    nameTextField.focus();
+    nameTextField.blur();
+
+    await waitFor(() => {
+      expect(nameTextField).toHaveValue('');
+      expect(surnameTextField).toHaveValue('');
+      expect(emailTextField).toHaveValue('');
       expect(getByTestId(/submit/i)).toBeDisabled();
     });
   });
